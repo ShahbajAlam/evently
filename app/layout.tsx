@@ -1,7 +1,7 @@
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +17,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html
+            lang="en"
+            suppressHydrationWarning
+            className=" lg:w-[80%] lg:max-w-[950px] lg:mx-auto"
+        >
             <body className={inter.className}>
                 <ThemeProvider
                     attribute="class"
