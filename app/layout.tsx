@@ -20,7 +20,7 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
-            className=" lg:w-[80%] lg:max-w-[950px] lg:mx-auto"
+            className=" lg:w-[80%] lg:max-w-[1000px] lg:mx-auto"
         >
             <body className={inter.className}>
                 <ThemeProvider
