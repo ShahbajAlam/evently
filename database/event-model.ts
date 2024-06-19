@@ -5,10 +5,9 @@ export type EventProps = {
     title: string;
     description: string;
     image: string;
-    city: string;
-    country: string;
+    address: string;
     date: Date;
-    cost: number;
+    price: number;
 };
 
 const EventSchema = new Schema(
@@ -16,10 +15,9 @@ const EventSchema = new Schema(
         title: String,
         description: String,
         image: String,
-        city: String,
-        country: String,
+        address: String,
         date: Date,
-        cost: Number,
+        price: Number,
     },
     { timestamps: true }
 );
