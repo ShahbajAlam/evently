@@ -30,8 +30,6 @@ export default function page() {
         url: "",
     });
 
-    console.log(url);
-
     async function handleAddEvent(e: FormEvent) {
         e.preventDefault();
 

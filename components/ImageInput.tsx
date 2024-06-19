@@ -23,15 +23,16 @@ export default function ImageInput({
     useEffect(() => {
         if (!image) return;
 
-        if (image.size / 1024 > 500) {
+        if (image.size / 1024 > 200) {
             setError((err) => ({
                 ...err,
-                url: "Please upload image with size less than 500KB",
+                url: "Please upload image with size less than 200KB",
             }));
             return;
         }
 
         const reader = new FileReader();
+        reader.readAsDataURL(image);
         reader.onload = (e) => {
             setUrl(e.target?.result as string);
         };
