@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { UserCircle } from "lucide-react";
 import { ToggleThemeButton } from "./ToggleThemeButton";
 import {
+    LoginLink,
     LogoutLink,
     getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -11,25 +13,40 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "./ui/button";
+
+function LoginButton() {
+    return (
+        <LoginLink>
+            <Button>Log In</Button>
+        </LoginLink>
+    );
+}
 
 async function UserButton() {
     const { isAuthenticated, getUser } = getKindeServerSession();
+
+    if (!(await isAuthenticated())) {
+        return <LoginButton />;
+    }
+
     if (await isAuthenticated()) {
         const user = await getUser();
 
         return (
             <DropdownMenu>
                 <DropdownMenuTrigger className="outline-none">
-                    <img
-                        src={user?.picture as string}
-                        alt={`${user?.given_name}'s profile picture`}
-                        className="w-10 aspect-square rounded-full"
-                    />
+                    {user?.picture ? (
+                        <img
+                            src={user?.picture as string}
+                            alt={`${user?.given_name}'s profile picture`}
+                            className="w-10 aspect-square rounded-full"
+                        />
+                    ) : (
+                        <UserCircle className="w-10 aspect-square rounded-full" />
+                    )}
                 </DropdownMenuTrigger>
-                <DropdownMenuContent
-                    align="end"
-                    sideOffset={10}
-                >
+                <DropdownMenuContent align="end" sideOffset={10}>
                     <Link href="/add-event">
                         <DropdownMenuItem className="cursor-pointer">
                             Add Event

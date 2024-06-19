@@ -1,8 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Input } from "./ui/input";
-import { storage } from "@/firebase/config";
 import { Progress } from "@/components/ui/progress";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function ImageInput({
     setUrl,
@@ -21,8 +19,6 @@ export default function ImageInput({
     >;
 }) {
     const [image, setImage] = useState<File>();
-    const [progress, setProgress] = useState(0);
-    const rand = (Math.random() + Math.random()).toString();
 
     useEffect(() => {
         if (!image) return;
@@ -35,40 +31,20 @@ export default function ImageInput({
             return;
         }
 
-        const storageRef = ref(storage, `images/${rand}-${image.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                setProgress(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-            },
-            (error) => {
-                setError((err) => ({ ...err, url: error.message }));
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-                    setUrl(downloadURL)
-                );
-            }
-        );
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            setUrl(e.target?.result as string);
+        };
     }, [image]);
 
     return (
-        <>
-            <Input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                    setError((err) => ({ ...err, url: "" }));
-                    if (e.target.files) setImage(e.target.files[0]);
-                }}
-            />
-            {progress > 0 && progress < 100 && (
-                <Progress max={100} value={progress} />
-            )}
-        </>
+        <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+                setError((err) => ({ ...err, url: "" }));
+                if (e.target.files) setImage(e.target.files[0]);
+            }}
+        />
     );
 }
