@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PaginationButton } from "./Pagination";
 import fetchEvents from "@/actions/fetchEvents";
 import { EventProps } from "@/database/event-model";
+import SingleEvent from "./SingleEvent";
 
 export default function ShowEvents({ eventCount }: { eventCount: number }) {
     const [page, setPage] = useState(1);
@@ -36,7 +38,13 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
         <div className="w-full flex flex-col gap-5 py-4">
             <ul className="grid grid-cols-3 gap-4">
                 {events.map((event) => (
-                    <li key={event._id}>{event.title}</li>
+                    <Link
+                        key={event._id}
+                        href={`events/${event._id}`}
+                        className="rounded-xl p-4 border-2 shadow-lg"
+                    >
+                        <SingleEvent {...event} />
+                    </Link>
                 ))}
             </ul>
 

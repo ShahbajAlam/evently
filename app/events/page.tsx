@@ -1,7 +1,7 @@
-import fetchEventCount from "@/actions/fetchEventCount";
-import ShowEvents from "@/components/ShowEvents";
-import { SkeletonLoader } from "@/components/SkeletonLoader";
 import { Suspense } from "react";
+import ShowEvents from "@/components/ShowEvents";
+import fetchEventCount from "@/actions/fetchEventCount";
+import { SkeletonLoader } from "@/components/SkeletonLoader";
 
 async function Events() {
     const eventCount = await fetchEventCount();
