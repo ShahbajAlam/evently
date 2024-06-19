@@ -68,7 +68,7 @@ async function UserButton() {
 
 export default async function Navbar() {
     return (
-        <nav className="py-2 flex justify-between items-center sticky top-0">
+        <nav className="py-2 flex justify-between items-center sticky top-0 backdrop-blur-sm">
             <Link href="/">
                 <h1>
                     <span className="bg-gradient-to-r from-[#d4a523] to-[#F37335] text-transparent bg-clip-text">

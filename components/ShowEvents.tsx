@@ -41,7 +41,7 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
                     <Link
                         key={event._id}
                         href={`events/${event._id}`}
-                        className="rounded-xl p-4 border-2 shadow-lg"
+                        className="rounded-xl p-4 border shadow-lg"
                     >
                         <SingleEvent {...event} />
                     </Link>

@@ -10,7 +10,7 @@ export default async function fetchEvents(page: number = 1) {
             date: { $gt: new Date() },
         })
             .sort({ date: -1 })
-            .skip(page - 1)
+            .skip((page - 1) * 10)
             .limit(10);
         return JSON.stringify(events);
     } catch (error) {
