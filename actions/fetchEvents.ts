@@ -3,7 +3,7 @@
 import connectDB from "@/database/connectDB";
 import { Events } from "@/database/event-model";
 
-export default async function fetchEvents(page: number = 1) {
+export default async function fetchEvents(page: number) {
     try {
         await connectDB();
         const events = await Events.find({

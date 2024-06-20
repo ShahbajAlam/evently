@@ -1,57 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { PaginationButton } from "./Pagination";
-import fetchEvents from "@/actions/fetchEvents";
-import { EventProps } from "@/database/event-model";
 import SingleEvent from "./SingleEvent";
+import { PaginationButton } from "./Pagination";
+import { EventProps } from "@/database/event-model";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ShowEvents({ eventCount }: { eventCount: number }) {
-    const [loaded, setLoaded] = useState(false);
-    const [page, setPage] = useState(1);
+export default function ShowEvents({
+    eventCount,
+    events,
+}: {
+    eventCount: number;
+    events: string;
+}) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const page = Number(searchParams.get("page")) || 1;
     const FIRST_PAGE = 1;
     const LAST_PAGE = Math.ceil(eventCount / 10);
-    const [events, setEvents] = useState<Array<EventProps>>([]);
 
     const prevPageHandler = () => {
-        setPage((oldPage) => {
-            if (oldPage === FIRST_PAGE) return oldPage;
-            return oldPage - 1;
-        });
+        if (Number(page) === FIRST_PAGE) return;
+        else router.push(`/events?page=${page - 1}`);
         if (typeof window != "undefined") {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     };
 
     const nextPageHandler = () => {
-        setPage((oldPage) => {
-            if (oldPage === LAST_PAGE) return oldPage;
-            return oldPage + 1;
-        });
+        if (Number(page) === LAST_PAGE) return;
+        else router.push(`/events?page=${page + 1}`);
         if (typeof window != "undefined") {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     };
 
-    useEffect(() => {
-        (async () => {
-            try {
-                setLoaded(false);
-                const data = (await fetchEvents(page)) as string;
-                setEvents(JSON.parse(data));
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoaded(true);
-            }
-        })();
-    }, [page]);
-
     return (
         <div className="w-full flex flex-col gap-5 py-4">
             <ul className="grid grid-cols-3 gap-4">
-                {events.map((event) => (
+                {JSON.parse(events).map((event: EventProps) => (
                     <Link
                         key={event._id}
                         href={`events/${event._id}`}
@@ -62,9 +50,9 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
                 ))}
             </ul>
 
-            {eventCount > 10 && loaded && (
+            {eventCount > 10 && (
                 <PaginationButton
-                    page={page}
+                    page={Number(page)}
                     FIRST_PAGE={FIRST_PAGE}
                     LAST_PAGE={LAST_PAGE}
                     prevPageHandler={prevPageHandler}

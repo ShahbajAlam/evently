@@ -5,9 +5,8 @@ import {
     PaginationContent,
     PaginationItem,
     PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "./ui/button";
 
 type PaginationButtonProps = {
     page: number;
@@ -24,25 +23,25 @@ export function PaginationButton(props: PaginationButtonProps) {
     return (
         <Pagination className="self-center">
             <PaginationContent>
-                <PaginationItem
+                <Button
+                    disabled={page === FIRST_PAGE}
                     onClick={prevPageHandler}
-                    className="cursor-pointer"
-                    aria-disabled={page === FIRST_PAGE}
+                    className="cursor-pointer disabled:brightness-50"
                 >
-                    <PaginationPrevious />
-                </PaginationItem>
+                    <PaginationItem>Prev</PaginationItem>
+                </Button>
 
                 <PaginationItem className="cursor-default">
                     <PaginationLink isActive>{page}</PaginationLink>
                 </PaginationItem>
 
-                <PaginationItem
+                <Button
                     onClick={nextPageHandler}
-                    className="cursor-pointer"
-                    aria-disabled={page === LAST_PAGE}
+                    className="cursor-pointer disabled:brightness-50"
+                    disabled={page === LAST_PAGE}
                 >
-                    <PaginationNext />
-                </PaginationItem>
+                    <PaginationItem>Next</PaginationItem>
+                </Button>
             </PaginationContent>
         </Pagination>
     );
