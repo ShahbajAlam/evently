@@ -27,7 +27,11 @@ export default async function page({
 
     return (
         <main className="min-h-[calc(100dvh-68px)] flex flex-col justify-start items-center">
-            <ShowEvents events={events} eventCount={eventCount as number} />
+            <ShowEvents
+                isMine={true}
+                events={events}
+                eventCount={eventCount as number}
+            />
         </main>
     );
 }

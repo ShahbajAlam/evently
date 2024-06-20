@@ -41,9 +41,14 @@ export default async function page({
                     <h3>{new Date(event.date).toDateString()}</h3>
                 </div>
 
-                <Button variant="default" className="uppercase">
-                    Grab your ticket now
-                </Button>
+                <div className="flex gap-6">
+                    <Button variant="default" className="uppercase">
+                        Update event
+                    </Button>
+                    <Button variant="default" className="uppercase">
+                        Remove event
+                    </Button>
+                </div>
             </section>
         </main>
     );

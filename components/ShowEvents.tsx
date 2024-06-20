@@ -9,9 +9,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function ShowEvents({
     eventCount,
     events,
+    isMine,
 }: {
     eventCount: number;
     events: string;
+    isMine: boolean;
 }) {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -22,7 +24,10 @@ export default function ShowEvents({
 
     const prevPageHandler = () => {
         if (Number(page) === FIRST_PAGE) return;
-        else router.push(`/events?page=${page - 1}`);
+        else {
+            if (isMine) router.push(`/my-events?page=${page - 1}`);
+            else router.push(`/events?page=${page - 1}`);
+        }
         if (typeof window != "undefined") {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -30,7 +35,10 @@ export default function ShowEvents({
 
     const nextPageHandler = () => {
         if (Number(page) === LAST_PAGE) return;
-        else router.push(`/events?page=${page + 1}`);
+        else {
+            if (isMine) router.push(`/my-events?page=${page + 1}`);
+            else router.push(`/events?page=${page + 1}`);
+        }
         if (typeof window != "undefined") {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -42,7 +50,7 @@ export default function ShowEvents({
                 {JSON.parse(events).map((event: EventProps) => (
                     <Link
                         key={event._id}
-                        href={`events/${event._id}`}
+                        href={`${isMine ? "my-events" : "events"}/${event._id}`}
                         className="rounded-xl p-4 border shadow-lg"
                     >
                         <SingleEvent {...event} />

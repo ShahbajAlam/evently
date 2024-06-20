@@ -96,12 +96,12 @@ export default function AddEventForm({ _id }: { _id: string }) {
 
     return (
         <div className="flex flex-col gap-4 items-center">
-            <h2 className="text-center">Add your event</h2>
+            <h2 className="text-center uppercase">Add your event</h2>
 
             <form
                 ref={formRef}
                 onSubmit={handleAddEvent}
-                className="w-[75%] flex flex-col gap-3"
+                className="w-[75%] flex flex-col gap-3 bg-zinc-500 dark:bg-zinc-700 p-6 rounded-2xl"
             >
                 <Input
                     type="text"
