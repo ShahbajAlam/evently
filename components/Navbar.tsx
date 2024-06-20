@@ -52,9 +52,11 @@ async function UserButton() {
                             Add Event
                         </DropdownMenuItem>
                     </Link>
-                    <DropdownMenuItem className="cursor-pointer">
-                        My Events
-                    </DropdownMenuItem>
+                    <Link href="/my-events">
+                        <DropdownMenuItem className="cursor-pointer">
+                            My Events
+                        </DropdownMenuItem>
+                    </Link>
                     <LogoutLink className="text-red-400">
                         <DropdownMenuItem className="cursor-pointer">
                             Log Out

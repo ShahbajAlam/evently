@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 export type EventProps = {
     _id?: string;
@@ -20,7 +20,7 @@ const EventSchema = new Schema(
         date: Date,
         price: Number,
         addedBy: {
-            type: String,
+            type: Schema.Types.ObjectId,
             ref: "users",
         },
     },

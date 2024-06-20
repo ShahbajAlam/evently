@@ -11,5 +11,5 @@ export default async function page() {
     const user = await getUser();
     const _id = await fetchUserID(user?.email as string);
 
-    return <AddEventForm _id={JSON.stringify(_id)} />;
+    return <AddEventForm _id={_id as string} />;
 }

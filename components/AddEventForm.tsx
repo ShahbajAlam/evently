@@ -9,6 +9,7 @@ import { AddressSearch } from "@/components/AddressSearch";
 import ImageInput from "@/components/ImageInput";
 import { DateInput } from "@/components/DateInput";
 import { toast } from "sonner";
+import mongoose from "mongoose";
 
 function ShowError({ error }: { error: string }) {
     return <p className="text-sm text-red-500">{error}</p>;
@@ -81,7 +82,7 @@ export default function AddEventForm({ _id }: { _id: string }) {
                 description,
                 image: url,
                 price: Number(price),
-                addedBy: JSON.parse(_id)._id,
+                addedBy: mongoose.Types.ObjectId.createFromHexString(_id),
             });
             reset();
             toast("Event has been added");
