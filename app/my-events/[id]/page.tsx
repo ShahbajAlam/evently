@@ -1,5 +1,5 @@
 import fetchEventById from "@/actions/fetchEventById";
-import { Button } from "@/components/ui/button";
+import RemoveEventButton from "@/components/RemoveEventButton";
 import { EventProps } from "@/database/event-model";
 import { CalendarDays, IndianRupeeIcon, LocateFixedIcon } from "lucide-react";
 
@@ -19,7 +19,7 @@ export default async function page({
                 <img
                     src={event.image}
                     alt={`${event.title} image`}
-                    className="aspect-video object-cover"
+                    className="w-full aspect-video object-cover bg-gray-300"
                 />
                 <p>{event.description}</p>
             </section>
@@ -41,14 +41,7 @@ export default async function page({
                     <h3>{new Date(event.date).toDateString()}</h3>
                 </div>
 
-                <div className="flex gap-6">
-                    <Button variant="default" className="uppercase">
-                        Update event
-                    </Button>
-                    <Button variant="default" className="uppercase">
-                        Remove event
-                    </Button>
-                </div>
+                <RemoveEventButton id={event._id as string} />
             </section>
         </main>
     );
