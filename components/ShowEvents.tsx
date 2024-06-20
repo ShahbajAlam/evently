@@ -8,6 +8,7 @@ import { EventProps } from "@/database/event-model";
 import SingleEvent from "./SingleEvent";
 
 export default function ShowEvents({ eventCount }: { eventCount: number }) {
+    const [loaded, setLoaded] = useState(false);
     const [page, setPage] = useState(1);
     const FIRST_PAGE = 1;
     const LAST_PAGE = Math.ceil(eventCount / 10);
@@ -18,6 +19,9 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
             if (oldPage === FIRST_PAGE) return oldPage;
             return oldPage - 1;
         });
+        if (typeof window != "undefined") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
     };
 
     const nextPageHandler = () => {
@@ -25,12 +29,22 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
             if (oldPage === LAST_PAGE) return oldPage;
             return oldPage + 1;
         });
+        if (typeof window != "undefined") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
     };
 
     useEffect(() => {
         (async () => {
-            const data = (await fetchEvents(page)) as string;
-            setEvents(JSON.parse(data));
+            try {
+                setLoaded(false);
+                const data = (await fetchEvents(page)) as string;
+                setEvents(JSON.parse(data));
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoaded(true);
+            }
         })();
     }, [page]);
 
@@ -48,7 +62,7 @@ export default function ShowEvents({ eventCount }: { eventCount: number }) {
                 ))}
             </ul>
 
-            {eventCount > 10 && (
+            {eventCount > 10 && loaded && (
                 <PaginationButton
                     page={page}
                     FIRST_PAGE={FIRST_PAGE}
