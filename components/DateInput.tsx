@@ -17,6 +17,7 @@ import {
 export function DateInput({
     setDate,
     setError,
+    formSubmitted,
 }: {
     setDate: Dispatch<SetStateAction<string>>;
     setError: Dispatch<
@@ -29,6 +30,7 @@ export function DateInput({
             url: string;
         }>
     >;
+    formSubmitted: boolean;
 }) {
     const [date, setdate] = React.useState<Date>();
 
@@ -40,6 +42,10 @@ export function DateInput({
         const day = date.getDate();
         setDate(`${year}-${month + 1}-${day}`);
     }, [date]);
+
+    React.useEffect(() => {
+        setdate(undefined);
+    }, [formSubmitted]);
 
     return (
         <Popover>

@@ -8,6 +8,7 @@ export type EventProps = {
     address: string;
     date: Date;
     price: number;
+    addedBy: any;
 };
 
 const EventSchema = new Schema(
@@ -18,6 +19,10 @@ const EventSchema = new Schema(
         address: String,
         date: Date,
         price: Number,
+        addedBy: {
+            type: String,
+            ref: "users",
+        },
     },
     { timestamps: true }
 );

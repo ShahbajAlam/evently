@@ -1,6 +1,6 @@
 import { Input } from "./ui/input";
 import useOnclickOutside from "react-cool-onclickoutside";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 
 type AddressSearchProps = {
@@ -15,9 +15,14 @@ type AddressSearchProps = {
             url: string;
         }>
     >;
+    formSubmitted: boolean;
 };
 
-export const AddressSearch = ({ setAddress, setError }: AddressSearchProps) => {
+export const AddressSearch = ({
+    setAddress,
+    setError,
+    formSubmitted,
+}: AddressSearchProps) => {
     const {
         ready,
         value,
@@ -42,6 +47,10 @@ export const AddressSearch = ({ setAddress, setError }: AddressSearchProps) => {
             setAddress(description);
             clearSuggestions();
         };
+
+    useEffect(() => {
+        setValue("");
+    }, [formSubmitted]);
 
     const renderSuggestions = () =>
         data.map((suggestion) => {

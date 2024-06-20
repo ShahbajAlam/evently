@@ -12,6 +12,7 @@ import { TrashIcon } from "lucide-react";
 export default function ImageInput({
     setUrl,
     setError,
+    formSubmitted,
 }: {
     setUrl: Dispatch<SetStateAction<string>>;
     setError: Dispatch<
@@ -24,11 +25,17 @@ export default function ImageInput({
             url: string;
         }>
     >;
+    formSubmitted: boolean;
 }) {
     const [image, setImage] = useState<File>();
     const [loaded, setLoaded] = useState(false);
     const rand = (Math.random() + Math.random()).toString();
     const [imageRef, setImageRef] = useState("");
+
+    useEffect(() => {
+        setImage(undefined);
+        setLoaded(false);
+    }, [formSubmitted]);
 
     useEffect(() => {
         if (!image) return;
